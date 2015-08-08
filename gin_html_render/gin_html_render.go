@@ -72,7 +72,11 @@ func (r *Render) Instance(name string, data interface{}) render.Render {
 
 // loadTemplate parses the specified template and returns it
 func (r *Render) loadTemplate(name string) *template.Template {
-	return template.Must(template.ParseFiles(r.Files[name]...))
+	tpl, err := template.ParseFiles(r.Files[name]...)
+	if err != nil {
+		panic(name + " template name mismatch")
+	}
+	return template.Must(tpl, err)
 }
 
 // New returns a fresh instance of Render
