@@ -30,6 +30,9 @@ func main() {
 	// Set html render options
 	htmlRender := gin_html_render.New()
 	htmlRender.Mode = gin.Mode()
+	// htmlRender.Ext = ".html"
+	// htmlRender.TemplatesDir = "templates/"
+	htmlRender.Layout = "layouts/default"
 
 	// Tell gin to use our html render
 	router.HTMLRender = htmlRender.Create()
