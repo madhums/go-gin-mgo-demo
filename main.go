@@ -28,12 +28,11 @@ func main() {
 	router := gin.Default()
 
 	// Set html render options
-	htmlRender := gin_html_render.New(gin_html_render.Options{
-		Debug:  gin.IsDebugging(),
-		Layout: "layouts/default",
-		// TemplatesDir: "templates/", // default
-		// Ext:          ".html",      // default
-	})
+	htmlRender := gin_html_render.New()
+	htmlRender.Debug = gin.IsDebugging()
+	htmlRender.Layout = "layouts/default"
+	// htmlRender.TemplatesDir = "templates/" // default
+	// htmlRender.Ext = ".html"               // default
 
 	// Tell gin to use our html render
 	router.HTMLRender = htmlRender.Create()

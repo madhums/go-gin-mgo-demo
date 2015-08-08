@@ -19,19 +19,17 @@ const (
 	Layout = "layout"
 	// Ext is the file extension of the rendered templates
 	Ext = ".html"
+	// Debug enables debug mode
+	Debug = false
 )
 
-type Options struct {
+type Render struct {
+	Templates    map[string]*template.Template
+	Files        map[string][]string
 	TemplatesDir string
 	Layout       string
 	Ext          string
 	Debug        bool
-}
-
-type Render struct {
-	Templates map[string]*template.Template
-	Files     map[string][]string
-	Options
 }
 
 // Add assigns the name to the template
@@ -78,24 +76,14 @@ func (r *Render) loadTemplate(name string) *template.Template {
 }
 
 // New returns a fresh instance of Render
-func New(options Options) Render {
-
-	if len(options.TemplatesDir) == 0 {
-		options.TemplatesDir = TemplatesDir
-	}
-
-	if len(options.Layout) == 0 {
-		options.Layout = Layout
-	}
-
-	if len(options.Ext) == 0 {
-		options.Ext = Ext
-	}
-
+func New() Render {
 	return Render{
-		Templates: make(map[string]*template.Template),
-		Files:     make(map[string][]string),
-		Options:   options,
+		Templates:    make(map[string]*template.Template),
+		Files:        make(map[string][]string),
+		TemplatesDir: TemplatesDir,
+		Layout:       Layout,
+		Ext:          Ext,
+		Debug:        Debug,
 	}
 }
 
