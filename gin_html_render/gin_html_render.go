@@ -95,18 +95,23 @@ func (r Render) Create() Render {
 	layoutFileName := "layout"
 	layout := TemplateDir + layoutFileName + Ext
 
+	// root dir of templates
+
 	tpls, err := filepath.Glob(TemplateDir + "*" + Ext)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	for _, tpl := range tpls {
+		// This check is to prevent `panic: template: redefinition of template "layout"`
 		name := getTplName(tpl)
 		if name == layoutFileName {
 			continue
 		}
-		r.AddFromFiles(getTplName(tpl), layout, tpl)
+		r.AddFromFiles(name, layout, tpl)
 	}
+
+	// sub directories
 
 	modTpls, err := filepath.Glob(TemplateDir + "**/*" + Ext)
 	if err != nil {
