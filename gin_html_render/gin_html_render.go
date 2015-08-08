@@ -1,7 +1,39 @@
+// Package GinHTMLRender provides some sugar for gin's template rendering
+//
+// This work is based on gin contribs multitemplate render https://github.com/gin-gonic/contrib/blob/master/renders/multitemplate
+//
+// Usage
+//
+// 		router := gin.Default()
+//
+// 		// Set html render options
+// 		htmlRender := GinHTMLRender.New()
+// 		htmlRender.Debug = gin.IsDebugging()
+// 		htmlRender.Layout = "layouts/default"
+// 		// htmlRender.TemplatesDir = "templates/" // default
+// 		// htmlRender.Ext = ".html"               // default
+//
+// 		// Tell gin to use our html render
+// 		router.HTMLRender = htmlRender.Create()
+//
+// Structure
+//
+// 		|-- templates/
+// 		    |--
+// 		    |-- 400.html
+// 		    |-- 404.html
+// 		    |-- layouts/
+// 		        |--- default.html
+// 		    |-- articles/
+// 		        |--- list.html
+// 		        |--- form.html
+//
+//
+// And if you want to render `templates/articles/list.html` in your handler
+//
+// 		c.HTML(http.StatusOK, "articles/list", "")
+//
 package GinHTMLRender
-
-// This work is based on gin contribs multitemplate render
-// https://github.com/gin-gonic/contrib/blob/master/renders/multitemplate
 
 import (
 	"html/template"
