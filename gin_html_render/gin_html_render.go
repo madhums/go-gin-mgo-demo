@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
@@ -20,7 +21,9 @@ type Render struct {
 
 const (
 	// TemplateDir holds the location of the templates
-	TemplateDir = "templates"
+	TemplateDir = "templates/"
+	// Ext is the file extension of the rendered templates
+	Ext = ".html"
 )
 
 var (
@@ -89,16 +92,40 @@ func New() Render {
 // TODO: provide a way to customize template dir, layout dir
 func (r Render) Create() Render {
 
-	r.AddFromFiles("400.html", TemplateDir+"/layout.html", TemplateDir+"/400.html")
+	layoutFileName := "layout"
+	layout := TemplateDir + layoutFileName + Ext
 
-	tpls, err := filepath.Glob(TemplateDir + "/**/*")
+	tpls, err := filepath.Glob(TemplateDir + "*" + Ext)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	for _, tpl := range tpls {
-		r.AddFromFiles(filepath.Base(tpl), TemplateDir+"/layout.html", tpl)
+		name := getTplName(tpl)
+		if name == layoutFileName {
+			continue
+		}
+		r.AddFromFiles(getTplName(tpl), layout, tpl)
+	}
+
+	modTpls, err := filepath.Glob(TemplateDir + "**/*" + Ext)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for _, tpl := range modTpls {
+		r.AddFromFiles(getTplName(tpl), layout, tpl)
 	}
 
 	return r
+}
+
+// getTplName returns the name of the template
+// For example, if the template path is `templates/articles/list.html`
+// getTplName would return `articles/list`
+func getTplName(tpl string) string {
+	dir, file := filepath.Split(tpl)
+	dir = strings.Replace(dir, TemplateDir, "", 1)
+	file = strings.TrimSuffix(file, Ext)
+	return dir + file
 }

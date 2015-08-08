@@ -26,7 +26,7 @@ func ErrorHandler(c *gin.Context) {
 
 	// TODO: Handle it in a better way
 	if len(c.Errors) > 0 {
-		c.HTML(http.StatusBadRequest, "400.html", gin.H{
+		c.HTML(http.StatusBadRequest, "400", gin.H{
 			"errors": c.Errors,
 		})
 	}

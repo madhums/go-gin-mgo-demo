@@ -15,7 +15,7 @@ import (
 func New(c *gin.Context) {
 	article := models.Article{}
 
-	c.HTML(http.StatusOK, "articles-form.html", gin.H{
+	c.HTML(http.StatusOK, "articles/form", gin.H{
 		"title":   "New article",
 		"article": article,
 	})
@@ -49,7 +49,7 @@ func Edit(c *gin.Context) {
 		c.Error(err)
 	}
 
-	c.HTML(http.StatusOK, "articles-form.html", gin.H{
+	c.HTML(http.StatusOK, "articles/form", gin.H{
 		"title":   "Edit article",
 		"article": article,
 	})
@@ -63,7 +63,7 @@ func List(c *gin.Context) {
 	if err != nil {
 		c.Error(err)
 	}
-	c.HTML(http.StatusOK, "articles-list.html", gin.H{
+	c.HTML(http.StatusOK, "articles/list", gin.H{
 		"title":    "Articles",
 		"articles": articles,
 	})
