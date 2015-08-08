@@ -1,4 +1,4 @@
-package gin_html_render
+package GinHTMLRender
 
 // This work is based on gin contribs multitemplate render
 // https://github.com/gin-gonic/contrib/blob/master/renders/multitemplate
@@ -23,6 +23,7 @@ const (
 	Debug = false
 )
 
+// Render implements gin's HTMLRender and provides some sugar on top of it
 type Render struct {
 	Templates    map[string]*template.Template
 	Files        map[string][]string
@@ -124,7 +125,7 @@ func (r *Render) Create() *Render {
 	return r
 }
 
-// validate checks if the directory and the layout files exist as expected
+// Validate checks if the directory and the layout files exist as expected
 // and configured
 func (r *Render) Validate() {
 	// add trailing slash if the user has forgotten..
@@ -133,13 +134,13 @@ func (r *Render) Validate() {
 	}
 
 	// check for templates dir
-	if _, ok := exists(r.TemplatesDir); !ok {
+	if ok, _ := exists(r.TemplatesDir); !ok {
 		panic(r.TemplatesDir + " directory for rendering templates does not exist.\n Configure this by setting htmlRender.TemplatesDir = \"your-tpl-dir/\"")
 	}
 
 	// check for layout file
 	layoutFile := r.TemplatesDir + r.Layout + r.Ext
-	if _, ok := exists(layoutFile); !ok {
+	if ok, _ := exists(layoutFile); !ok {
 		panic(layoutFile + " layout file does not exist")
 	}
 }
@@ -156,14 +157,14 @@ func (r *Render) getTemplateName(tpl string) string {
 
 // exists returns whether the given file or directory exists or not
 // http://stackoverflow.com/a/10510783/232619
-func exists(path string) (error, bool) {
+func exists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
-		return nil, true
+		return true, nil
 	}
 
 	if os.IsNotExist(err) {
-		return nil, false
+		return false, nil
 	}
-	return err, true
+	return true, err
 }
