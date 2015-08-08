@@ -4,6 +4,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/madhums/go-gin-mgo-demo/db"
@@ -50,5 +51,9 @@ func main() {
 	router.POST("/delete/articles/:_id", articles.Delete)
 
 	// Start listening
-	router.Run(":" + Port)
+	port := Port
+	if len(os.Getenv("PORT")) > 0 {
+		port = os.Getenv("PORT")
+	}
+	router.Run(":" + port)
 }
