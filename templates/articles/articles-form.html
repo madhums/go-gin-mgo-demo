@@ -1,0 +1,36 @@
+{{ define "content" }}
+
+  <div class="page-header">
+    <h2>
+      {{ .title }} {{ .article.Title }}
+      {{ if .article.Id }}
+        <form class="inline pull-right" action="/delete/articles/{{ .article.Id.Hex }}" method="POST">
+          <a href="javascript:void(0);" onclick="if (confirm('Are you sure you want to delete {{ .article.Title }}?')) document.forms[0].submit();" class="red">
+            <i class="fa fa-trash"></i>
+          </a>
+        </form>
+      {{ end }}
+    </h2>
+  </div>
+
+  <form action="/articles/{{ .article.Id.Hex }}" method="POST">
+
+    {{ if .article.Id }}
+      <input type="hidden" name="_id" value="{{ .article.Id.Hex }}">
+    {{ end }}
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" name="title" class="form-control" id="title" placeholder="Enter the title of the article" value="{{ .article.Title }}">
+    </div>
+
+    <div class="form-group">
+      <label for="body">Body</label>
+      <textarea name="body" class="form-control" rows="3" placeholder="Enter article body">{{ .article.Body }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-default">Submit</button>
+
+  </form>
+
+{{ end }}

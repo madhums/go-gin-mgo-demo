@@ -1,0 +1,18 @@
+{{ define "content" }}
+
+  <div class="page-header">
+    <h2>{{ .title }}</h2>
+  </div>
+
+  {{ $articles := .articles }}
+
+  <div class="list-group">
+  {{ range $article := $articles }}
+    <a href="/articles/{{ $article.Id.Hex }}" class="list-group-item">
+      <h4 class="list-group-item-heading">{{ $article.Title }}</h4>
+      <p class="list-group-item-text">{{ $article.Body }}</p>
+    </a>
+  {{ end }}
+  </div>
+
+{{ end }}
