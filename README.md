@@ -1,5 +1,3 @@
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/madhums/go-gin-mgo-demo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 ## go-gin-mgo-demo
 
 A demo CRUD application in golang using the popular gin-gonic framework
@@ -14,15 +12,17 @@ A demo CRUD application in golang using the popular gin-gonic framework
   ```
 
   [codegangsta/gin](http://github.com/codegangsta/gin) is used to to automatically compile files while you are developing
-3.
+
+3. Run
+
   ```sh
   $ go get && go install && PORT=7000 DEBUG=* gin -p 9000 -a 7000 -i run # or make dev
   ```
 
-  Then visit `localhost:9000`
+  Then visit `localhost:7000`
 
-MONGODB_URL can be configured by setting the env variable.
-PORT can also be configured by setting the env variable
+- MONGODB_URL can be configured by setting the env variable.
+- PORT can also be configured by setting the env variable
 
 ```sh
 $ export MONGODB_URL=mongodb://

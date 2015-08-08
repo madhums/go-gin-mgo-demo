@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/madhums/go-gin-mgo-demo/db"
+	"github.com/madhums/go-gin-mgo-demo/gin_html_render"
 	"github.com/madhums/go-gin-mgo-demo/handlers/articles"
 	"github.com/madhums/go-gin-mgo-demo/middlewares"
 )
@@ -25,7 +26,14 @@ func main() {
 
 	// Configure
 	router := gin.Default()
-	router.HTMLRender = render()
+
+	// Set html render options
+	htmlRender := gin_html_render.New()
+	htmlRender.Mode = gin.Mode()
+
+	// Tell gin to use our html render
+	router.HTMLRender = htmlRender.Create()
+
 	router.RedirectTrailingSlash = true
 	router.RedirectFixedPath = true
 
